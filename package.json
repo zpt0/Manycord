@@ -1,6 +1,6 @@
 {
     "name": "manycord",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A Vencord plugin that removes or customizes Discord's five-account switcher limit",
     "author": "zpt0.dev",
     "license": "MIT",
