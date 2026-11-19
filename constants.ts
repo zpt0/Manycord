@@ -1,5 +1,5 @@
-export const PLUGIN_VERSION = "0.1.0";
-export const GITHUB_REPO = "zpt0/manycord";
+export const PLUGIN_VERSION = "0.1.2";
+export const GITHUB_REPO = "zpt0/Manycord";
 export const UPDATE_CHECK_URL = GITHUB_REPO
     ? `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`
     : "";
