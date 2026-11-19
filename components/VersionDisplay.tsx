@@ -37,7 +37,11 @@ export function VersionDisplay() {
             clearTimeout(timeout);
 
             if (!response.ok) {
-                setStatus(response.status === 404 ? "No public release feed (local build)" : "Check failed");
+                setStatus(
+                    response.status === 404
+                        ? "No public release feed (local build)"
+                        : "Check failed"
+                );
                 return;
             }
 
@@ -66,7 +70,8 @@ export function VersionDisplay() {
             <div style={{ marginBottom: 8 }}>
                 <div style={{ fontSize: 16, fontWeight: 600, color: "#FFFFFF" }}>Manycord</div>
                 <div style={{ color: "var(--text-muted)", fontSize: 14, marginTop: 4 }}>
-                    Version: <span style={{ color: "#FFFFFF", fontWeight: 600 }}>v{PLUGIN_VERSION}</span>
+                    Version:{" "}
+                    <span style={{ color: "#FFFFFF", fontWeight: 600 }}>v{PLUGIN_VERSION}</span>
                     {status != null && <> • {status}</>}
                 </div>
             </div>
