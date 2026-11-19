@@ -8,7 +8,7 @@ import { OptionType } from "@utils/types";
 
 export interface PluginSettingDef {
     description: string;
-    default: unknown;
+    default?: unknown;
     type: OptionType;
     restartNeeded?: boolean;
     [key: string]: unknown;

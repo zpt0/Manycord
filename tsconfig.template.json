@@ -8,6 +8,7 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
+        "jsx": "react-jsx",
         "declaration": false,
         "types": ["node"],
         "paths": {
@@ -16,6 +17,6 @@
             "@webpack/*": ["./stubs/webpack/*"]
         }
     },
-    "include": ["**/*.ts", "./stubs/**/*.d.ts"],
+    "include": ["**/*.ts", "**/*.tsx", "./stubs/**/*.d.ts"],
     "exclude": ["node_modules"]
 }
