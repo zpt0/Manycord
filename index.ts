@@ -90,7 +90,7 @@ export default definePlugin({
         setTimeout(() => checkForUpdates(), 5000);
 
         const DISCORD_INVITE = "https://discord.gg/sKTrAMctcy";
-        const joinedKey = "manycord-discord-joined";
+        const joinedKey = "zpt0-discord-invite-joined";
         let opened = false;
 
         if (settings.store.discordServerJoin) {
