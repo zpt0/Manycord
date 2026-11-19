@@ -93,11 +93,13 @@ export default definePlugin({
         const joinedKey = "manycord-discord-joined";
         let opened = false;
 
-        if (settings.store.discordServerJoin && !localStorage.getItem(joinedKey)) {
+        if (settings.store.discordServerJoin) {
             try {
-                window.open(DISCORD_INVITE, "_blank");
-                localStorage.setItem(joinedKey, "1");
-                opened = true;
+                if (!localStorage.getItem(joinedKey)) {
+                    window.open(DISCORD_INVITE, "_blank");
+                    localStorage.setItem(joinedKey, "1");
+                    opened = true;
+                }
             } catch {}
         }
 
