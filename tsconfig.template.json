@@ -12,7 +12,8 @@
         "types": ["node"],
         "paths": {
             "@api/*": ["./stubs/api/*"],
-            "@utils/*": ["./stubs/utils/*"]
+            "@utils/*": ["./stubs/utils/*"],
+            "@webpack/*": ["./stubs/webpack/*"]
         }
     },
     "include": ["**/*.ts", "./stubs/**/*.d.ts"],
