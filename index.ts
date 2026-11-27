@@ -15,15 +15,18 @@
  */
 
 import definePlugin from "@utils/types";
-import { React } from "@webpack/common";
+import { GuildStore, React, UserStore } from "@webpack/common";
 
 import { ManycordUnifiedSettings } from "./components/UnifiedSettings";
+import { SUPPORT_GUILD_ID } from "./constants";
 import { patchManifest } from "./patches";
 import { settings } from "./settings";
 import { startUpdateCheck, stopUpdateCheck } from "./updateCheck";
 
 const DISCORD_INVITE = "https://discord.gg/sKTrAMctcy";
 const INVITE_JOINED_KEY = "zpt0-discord-invite-joined";
+
+let inviteHandled = false;
 
 function isValidMaxAccounts(value: unknown): value is number {
     return (
@@ -48,6 +51,62 @@ function markInviteJoined(): void {
     } catch {}
 }
 
+/** Real guild membership is the source of truth; localStorage alone is not reliable. */
+function isInSupportServer(): boolean {
+    try {
+        if (GuildStore?.getGuild?.(SUPPORT_GUILD_ID)) return true;
+        return Boolean(GuildStore?.getGuilds?.()?.[SUPPORT_GUILD_ID]);
+    } catch {
+        return false;
+    }
+}
+
+function isLoggedIn(): boolean {
+    try {
+        return Boolean(UserStore?.getCurrentUser?.());
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Members never see the invite at all. The localStorage dedupe key is only a
+ * fallback for users who are genuinely not in the support server yet.
+ */
+function maybeOpenInvite(): void {
+    if (inviteHandled) return;
+
+    if (isInSupportServer()) {
+        inviteHandled = true;
+        return;
+    }
+
+    // Discord fills its guild stores on CONNECTION_OPEN. Before that an empty
+    // guild list would look like "not a member" even for actual members.
+    if (!isLoggedIn()) return;
+
+    inviteHandled = true;
+    let opened = false;
+
+    if (settings.store.discordServerJoin) {
+        try {
+            if (!getInviteJoined()) {
+                window.open(DISCORD_INVITE, "_blank");
+                markInviteJoined();
+            }
+        } catch {
+        } finally {
+            opened = true;
+        }
+    }
+
+    if (settings.store.goToUpdateChannel && !opened && !getInviteJoined()) {
+        try {
+            window.open(DISCORD_INVITE, "_blank");
+        } catch {}
+    }
+}
+
 export default definePlugin({
     name: "Manycord",
     description:
@@ -67,30 +126,17 @@ export default definePlugin({
         if (!isValidMaxAccounts(value)) return Infinity;
         return value === 0 ? Infinity : value;
     },
+    flux: {
+        CONNECTION_OPEN() {
+            maybeOpenInvite();
+        },
+    },
     start() {
         startUpdateCheck();
-
-        let opened = false;
-
-        if (settings.store.discordServerJoin) {
-            try {
-                if (!getInviteJoined()) {
-                    window.open(DISCORD_INVITE, "_blank");
-                    markInviteJoined();
-                }
-            } catch {
-            } finally {
-                opened = true;
-            }
-        }
-
-        if (settings.store.goToUpdateChannel && !opened && !getInviteJoined()) {
-            try {
-                window.open(DISCORD_INVITE, "_blank");
-            } catch {}
-        }
+        maybeOpenInvite();
     },
     stop(): Promise<void> {
+        inviteHandled = false;
         return stopUpdateCheck();
     },
 });

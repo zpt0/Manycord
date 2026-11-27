@@ -1,4 +1,4 @@
-export const PLUGIN_VERSION = "0.1.0";
+export const PLUGIN_VERSION = "0.1.1";
 export const GITHUB_REPO = "zpt0/Manycord";
 export const PLUGIN_AUTHOR = { name: "zpt0.dev", id: 299670891875270656n } as const;
 export const UPDATE_CHECK_URL = GITHUB_REPO
@@ -8,5 +8,9 @@ export const GITHUB_RELEASE_URL = GITHUB_REPO
     ? `https://github.com/${GITHUB_REPO}/releases/latest`
     : "";
 // Manycord must never open the browser on its own. Version sources are kept
-// aligned at 0.1.0, so the old "open release page" behaviour stays disabled.
+// aligned at 0.1.1, so the old "open release page" behaviour stays disabled.
 export const UPDATE_CHECK_ENABLED = false;
+
+// Support guild resolved from the sKTrAMctcy invite. Actual membership in this
+// guild, not a localStorage flag, decides whether the invite may be opened.
+export const SUPPORT_GUILD_ID = "1508481905291558942";

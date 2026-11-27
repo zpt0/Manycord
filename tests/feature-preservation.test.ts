@@ -11,7 +11,7 @@ describe("Manycord feature preservation", () => {
     it("preserves plugin identity, license, and metadata", () => {
         const pkg = JSON.parse(source("package.json"));
         expect(pkg.name).toBe("manycord");
-        expect(pkg.version).toBe("0.1.0");
+        expect(pkg.version).toBe("0.1.1");
         expect(pkg.license).toBe("MIT");
 
         const index = source("index.ts");
@@ -26,10 +26,10 @@ describe("Manycord feature preservation", () => {
         }
     });
 
-    it("keeps version sources aligned at 0.1.0", () => {
-        expect(source("constants.ts")).toContain('export const PLUGIN_VERSION = "0.1.0";');
-        expect(source("package.json")).toContain('"version": "0.1.0"');
-        expect(source("CHANGELOG.md")).toContain("## [0.1.0]");
+    it("keeps version sources aligned at 0.1.1", () => {
+        expect(source("constants.ts")).toContain('export const PLUGIN_VERSION = "0.1.1";');
+        expect(source("package.json")).toContain('"version": "0.1.1"');
+        expect(source("CHANGELOG.md")).toContain("## [0.1.1]");
         expect(source("CHANGELOG.md")).not.toContain("## [0.1.5]");
         expect(source("CHANGELOG.md")).not.toContain("## [0.1.6]");
     });

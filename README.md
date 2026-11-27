@@ -35,6 +35,8 @@ This is a custom userplugin and is not included in the official Vencord build. Y
 | :--------------- | :--------------------------------------------------------- | :------ |
 | **Max Accounts** | Number of accounts that can be added, or `0` for no limit. | `0`     |
 
+**Support server invite:** Manycord checks Discord's guild list first. If you are already in the support server, the invite link is never opened — regardless of the legacy settings or any stored dedupe flag. The invite is only considered for logged-in accounts that are genuinely not a member yet.
+
 ## Disclaimer
 
 This plugin only modifies Discord's internal account count checks. It does not manage accounts, automate actions, or collect user data. Use at your own risk.

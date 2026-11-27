@@ -182,8 +182,19 @@ export function openContributorModal(user: unknown): void {
     __contributorModalUsers.push(user);
 }
 
+/** Mutable guild state so tests can simulate membership in the support server. */
+export const __guildStoreState = {
+    guilds: {} as Record<string, any>,
+};
+
+export const GuildStore = {
+    getGuild: (id: string) => __guildStoreState.guilds[id],
+    getGuilds: () => __guildStoreState.guilds,
+    getMutableGuilds: () => __guildStoreState.guilds,
+};
+
 export const UserStore = {
-    getCurrentUser: () => undefined,
+    getCurrentUser: () => ({ id: "test-user" }) as any,
     getUser: (_id: string) => undefined,
     getUsers: () => ({}) as Record<string, any>,
 };
